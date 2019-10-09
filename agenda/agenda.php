@@ -11,7 +11,7 @@
 
 			function stringtoarray ($string_agenda,&$array_agenda) {
 				//Convierte la agenda de datos (string) en un array asociativo
-				$a=explode (";",$string_agenda);
+				$a=explode (";",$string_agenda);//Divide el string en varios strings
 				for($i=0; $i<count($a); $i++) {
 					$array_agenda[$a[$i]]=$a[$i+1];
 					$i++;
@@ -38,11 +38,11 @@
 		if (isset ($_POST['submit'])) {
 			//Rellenamos el array con los datos recibidos en el campo oculto 'agenda' del formulario
 			stringtoarray ($_POST['agenda'],$array_agenda);
+			$array_agenda[$_POST['nombre']]=$_POST['email'];
 
-
-
-			// REALIZAR COMPROBACIONES NECESARIAS
-
+			if(empty($_POST['nombre'])){
+				echo "jhfkhasfujul";
+			}
 		}
 		?>
 
@@ -50,9 +50,9 @@
 			<!-- Campo oculto para ir almacenando los elementos de la agenda-->
 			<input name="agenda" type="textarea" value="<?php echo  arraytostring ($array_agenda) ?>"/><br>
 			Nombre:<br>
-			<input type="text" name="nombre"><br><br>
+			<input type="text" name="nombre" value="<?php echo $_POST["nombre"] ?>"><br><br>
 			Email:<br>
-			<input type="text" name="email"><br><br>
+			<input type="email" name="email" value="<?php echo $_POST["email"] ?>"><br><br>
 			<button type="submit" name="submit" >Añadir contacto</button>
 		</form>
 
@@ -63,7 +63,9 @@
 		    <th>Email</th>
 		  </tr>
 		  	<?php
-		  		// recorremos el array y mostramos los contactos
+		  		foreach ($array_agenda as $nombre => $email) {
+					  echo "<tr><td>$nombre</td><td>$email</td></tr>";
+				  }
 			?>
 		</table>
 

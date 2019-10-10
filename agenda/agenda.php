@@ -38,12 +38,23 @@
 		if (isset ($_POST['submit'])) {
 			//Rellenamos el array con los datos recibidos en el campo oculto 'agenda' del formulario
 			stringtoarray ($_POST['agenda'],$array_agenda);
-			$array_agenda[$_POST['nombre']]=$_POST['email'];
 
 			if(empty($_POST['nombre'])){
-				echo "jhfkhasfujul";
+				echo "El nombre es obligatorio";
+			}
+			else{
+				if(array_key_exists(strtolower($_POST['nombre']), $array_agenda)){
+					echo "El nombre ya existe";
+				}
+				else{
+					$array_agenda[strtolower($_POST['nombre'])]=$_POST['email'];
+				}
+			}
+			if(empty($_POST['email'])){
+				unset($array_agenda[$_POST['nombre']]);
 			}
 		}
+
 		?>
 
 		<form action="" method="post">
